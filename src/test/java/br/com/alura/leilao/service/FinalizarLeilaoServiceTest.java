@@ -1,12 +1,10 @@
 package br.com.alura.leilao.service;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -27,8 +25,8 @@ class FinalizarLeilaoServiceTest {
 	
 	@BeforeEach
 	public void beforeEach() {
-		MockitoAnnotations.initMocks(leilaoDao);
-		service = new FinalizarLeilaoService(leilaoDao);
+		MockitoAnnotations.initMocks(this);
+		this.service = new FinalizarLeilaoService(leilaoDao);
 	}
 	
 	@Test
@@ -38,9 +36,11 @@ class FinalizarLeilaoServiceTest {
 		Mockito.when(leilaoDao.buscarLeiloesExpirados())
 		.thenReturn(leiloes);
 		
+		service.finalizarLeiloesExpirados();
+		
 		Leilao leilao = leiloes.get(0);
-		assertTrue(leilao.isFechado());
-		assertEquals(new BigDecimal("900"), leilao.getLanceVencedor().getValor());
+		Assert.assertTrue(leilao.isFechado());
+		Assert.assertEquals(new BigDecimal("900"), leilao.getLanceVencedor().getValor());
 		
 		Mockito.verify(leilaoDao).salvar(leilao);
 	}
