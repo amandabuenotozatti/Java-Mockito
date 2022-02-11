@@ -12,8 +12,12 @@ import br.com.alura.leilao.model.Leilao;
 @Service
 public class FinalizarLeilaoService {
 
-	@Autowired
 	private LeilaoDao leiloes;
+
+	@Autowired
+	public FinalizarLeilaoService(LeilaoDao leiloes) {
+		this.leiloes = leiloes;
+	}
 
 	public void finalizarLeiloesExpirados() {
 		List<Leilao> expirados = leiloes.buscarLeiloesExpirados();
